@@ -35,7 +35,7 @@ jobs:
         with:
           context: .
           push: true
-          tag: ${{ secrets.DOCKERHUB_USERNAME}}/springboot-no-db:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME}}/springboot-no-db:latest
 
 
 
