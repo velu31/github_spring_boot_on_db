@@ -23,5 +23,19 @@ jobs:
         run: mvn --batch-mode clean verify
       - name: Confirm JAR exists
         run: ls -lh target/*.jar
+      - name: Login to Docker hub
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: docker push the build
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tag: ${{ secrets.DOCKERHUB_USERNAME}}/springboot-no-db:latest
+
 
 
