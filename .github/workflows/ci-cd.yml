@@ -1,0 +1,27 @@
+name: Srping boot ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build_tesing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v5
+      - name: set java 21
+        uses: actions/set-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: build and test
+        run: mvn --batch-mode clean verify
+      - name: Confirm JAR exists
+        run: ls -lh terget/*.jar
+
+
